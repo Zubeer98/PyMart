@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PyMart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-4 d-flex justify-content-between">
+    <a class="navbar-brand" href="/">🛒 PyMart</a>
+    <div>
+        {% if request.user.is_authenticated %}
+            <span class="text-white me-3">Hello, {{ request.user.username }}!</span>
+            <a href="/logout/" class="btn btn-outline-light me-2">Logout</a>
+        {% else %}
+            <a href="/login/" class="btn btn-outline-light me-2">Login</a>
+            <a href="/register/" class="btn btn-light me-2">Register</a>
+        {% endif %}
+        <a href="/cart/" class="btn btn-warning">🛒 Cart</a>
+    </div>
+</nav>
+<div class="container mt-4">
+    <h2>All Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top" height="200">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="text-success fw-bold">₹{{ product.price }}</p>
+                    <a href="/product/{{ product.pk }}/" class="btn btn-primary">View Details</a>
+                    <a href="/add-to-cart/{{ product.pk }}/" class="btn btn-warning">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
