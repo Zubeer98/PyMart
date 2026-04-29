@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PyMart{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0a0a; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; }
+        
+        /* Navbar */
+        .navbar { background: #111111 !important; border-bottom: 1px solid #222; padding: 12px 0; }
+        .navbar-brand { color: #f0c040 !important; font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; }
+        .navbar-brand span { color: #fff; }
+        .nav-search { flex: 1; max-width: 500px; margin: 0 20px; }
+        .nav-search input { background: #222; border: 1px solid #333; color: #fff; border-radius: 8px 0 0 8px; padding: 8px 16px; }
+        .nav-search input:focus { background: #222; border-color: #f0c040; color: #fff; box-shadow: none; }
+        .nav-search input::placeholder { color: #888; }
+        .nav-search .btn { background: #f0c040; border: none; color: #000; font-weight: 600; border-radius: 0 8px 8px 0; }
+        .nav-icons a { color: #e0e0e0 !important; margin-left: 16px; font-size: 0.9rem; text-decoration: none; }
+        .nav-icons a:hover { color: #f0c040 !important; }
+        .cart-btn { background: #f0c040 !important; color: #000 !important; border-radius: 8px; padding: 6px 16px !important; font-weight: 600; }
+
+        /* Hero Banner */
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding: 80px 0; text-align: center; border-bottom: 1px solid #222; }
+        .hero h1 { font-size: 3rem; font-weight: 800; color: #fff; margin-bottom: 16px; }
+        .hero h1 span { color: #f0c040; }
+        .hero p { font-size: 1.2rem; color: #aaa; margin-bottom: 32px; }
+        .hero-search { max-width: 600px; margin: 0 auto; display: flex; }
+        .hero-search input { flex: 1; background: #fff; border: none; padding: 14px 20px; font-size: 1rem; border-radius: 8px 0 0 8px; }
+        .hero-search button { background: #f0c040; border: none; padding: 14px 28px; font-weight: 700; color: #000; border-radius: 0 8px 8px 0; font-size: 1rem; cursor: pointer; }
+
+        /* Categories */
+        .categories { background: #111; padding: 30px 0; border-bottom: 1px solid #222; }
+        .category-item { text-align: center; padding: 16px; cursor: pointer; border-radius: 12px; transition: all 0.3s; }
+        .category-item:hover { background: #1a1a1a; transform: translateY(-4px); }
+        .category-icon { font-size: 2rem; margin-bottom: 8px; }
+        .category-name { font-size: 0.85rem; color: #aaa; }
+
+        /* Products */
+        .products-section { padding: 40px 0; }
+        .section-title { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid #f0c040; display: inline-block; }
+        
+        /* Product Card */
+        .product-card { background: #111; border: 1px solid #222; border-radius: 16px; overflow: hidden; transition: all 0.3s; height: 100%; }
+        .product-card:hover { transform: translateY(-8px); border-color: #f0c040; box-shadow: 0 20px 40px rgba(240,192,64,0.1); }
+        .product-img { width: 100%; height: 220px; object-fit: cover; background: #1a1a1a; display: flex; align-items: center; justify-content: center; }
+        .product-img-placeholder { width: 100%; height: 220px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #333; font-size: 4rem; }
+        .product-body { padding: 16px; }
+        .product-name { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        .product-desc { font-size: 0.85rem; color: #888; margin-bottom: 12px; line-height: 1.5; }
+        .product-price { font-size: 1.4rem; font-weight: 700; color: #f0c040; margin-bottom: 16px; }
+        .product-price span { font-size: 0.85rem; color: #555; text-decoration: line-through; margin-left: 8px; }
+        .btn-view { background: transparent; border: 1px solid #333; color: #e0e0e0; border-radius: 8px; padding: 8px 16px; font-size: 0.85rem; transition: all 0.3s; }
+        .btn-view:hover { border-color: #f0c040; color: #f0c040; }
+        .btn-cart { background: #f0c040; border: none; color: #000; border-radius: 8px; padding: 8px 16px; font-size: 0.85rem; font-weight: 600; transition: all 0.3s; }
+        .btn-cart:hover { background: #e0b030; }
+
+        /* Footer */
+        .footer { background: #111; border-top: 1px solid #222; padding: 50px 0 20px; margin-top: 60px; }
+        .footer-brand { font-size: 1.5rem; font-weight: 700; color: #f0c040; margin-bottom: 12px; }
+        .footer-desc { color: #666; font-size: 0.9rem; line-height: 1.7; }
+        .footer h6 { color: #fff; font-weight: 600; margin-bottom: 16px; }
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 8px; }
+        .footer-links a { color: #666; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-links a:hover { color: #f0c040; }
+        .footer-bottom { border-top: 1px solid #222; padding-top: 20px; margin-top: 40px; text-align: center; color: #555; font-size: 0.85rem; }
+        .social-icons a { color: #666; margin-right: 16px; font-size: 1.2rem; transition: color 0.3s; }
+        .social-icons a:hover { color: #f0c040; }
+
+        /* Badges */
+        .badge-new { background: #f0c040; color: #000; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
+        .badge-sale { background: #e74c3c; color: #fff; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; }
+
+        /* Cart page */
+        .cart-table { background: #111; border-radius: 16px; overflow: hidden; border: 1px solid #222; }
+        .cart-table th { background: #1a1a1a; color: #aaa; font-weight: 500; padding: 16px; border: none; }
+        .cart-table td { padding: 16px; border-color: #222; color: #e0e0e0; vertical-align: middle; }
+        .cart-summary { background: #111; border: 1px solid #222; border-radius: 16px; padding: 24px; }
+        .cart-total { font-size: 1.5rem; font-weight: 700; color: #f0c040; }
+
+        /* Auth pages */
+        .auth-card { background: #111; border: 1px solid #222; border-radius: 16px; padding: 40px; max-width: 480px; margin: 60px auto; }
+        .auth-card h3 { color: #fff; font-weight: 700; margin-bottom: 24px; }
+        .form-control { background: #1a1a1a !important; border: 1px solid #333 !important; color: #fff !important; border-radius: 8px; padding: 12px 16px; }
+        .form-control:focus { border-color: #f0c040 !important; box-shadow: 0 0 0 2px rgba(240,192,64,0.2) !important; }
+        .form-label { color: #aaa; font-size: 0.9rem; }
+        .btn-primary { background: #f0c040 !important; border: none !important; color: #000 !important; font-weight: 700; padding: 12px; border-radius: 8px; }
+        .btn-primary:hover { background: #e0b030 !important; }
+        .btn-success { background: #f0c040 !important; border: none !important; color: #000 !important; font-weight: 700; }
+        .btn-danger { background: #e74c3c !important; border: none !important; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">Py<span>Mart</span></a>
+        <div class="nav-search d-flex">
+            <input type="text" class="form-control" placeholder="Search for products...">
+            <button class="btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="nav-icons d-flex align-items-center">
+            {% if request.user.is_authenticated %}
+                <a href="#"><i class="fas fa-user me-1"></i> {{ request.user.username }}</a>
+                <a href="/logout/"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+            {% else %}
+                <a href="/login/"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+                <a href="/register/"><i class="fas fa-user-plus me-1"></i> Register</a>
+            {% endif %}
+            <a href="/cart/" class="cart-btn ms-3"><i class="fas fa-shopping-cart me-1"></i> Cart</a>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="footer-brand">PyMart</div>
+                <p class="footer-desc">Your premium online shopping destination. Quality products, best prices, fast delivery.</p>
+                <div class="social-icons mt-3">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6>Shop</h6>
+                <ul class="footer-links">
